@@ -106,11 +106,14 @@ struct CDeviceExtensions : public CPickList {
 //---------------------------CInstance----------------------------
 class CInstance {
     VkInstance instance;
-    void Create(const CLayers& layers, const CExtensions& extensions, const char* app_name, const char* engine_name);
+    void Create(const CLayers& layers, const CExtensions& extensions, const char* app_name, const char* engine_name
+                , uint16_t maj_ver, uint16_t min_ver);
 
   public:
-    CInstance(const CLayers& layers, const CExtensions& extensions, const char* app_name = "VulkanApp", const char* engine_name = "");
-    CInstance(const bool enable_validation = true, const char* app_name = "VulkanApp", const char* engine_name = "");
+    CInstance(const CLayers& layers, const CExtensions& extensions, const char* app_name = "VulkanApp", const char* engine_name = ""
+                , uint16_t maj_ver = 1, uint16_t min_ver = 1);
+    CInstance(const bool enable_validation = true, const char* app_name = "VulkanApp", const char* engine_name = ""
+                , uint16_t maj_ver = 1, uint16_t min_ver = 1);
 
     ~CInstance();
     // CLayers     layers;

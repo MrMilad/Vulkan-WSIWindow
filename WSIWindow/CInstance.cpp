@@ -122,7 +122,8 @@ void CDeviceExtensions::Init(VkPhysicalDevice phy, const char* layer_name) {
 //----------------------------------------------------------------
 
 //---------------------------CInstance----------------------------
-CInstance::CInstance(const bool enable_validation, const char* app_name, const char* engine_name) {
+CInstance::CInstance(const bool enable_validation, const char* app_name, const char* engine_name
+                    , uint16_t maj_ver, uint16_t min_ver) {
     CLayers layers;
 #ifdef ENABLE_VALIDATION
     // clang-format off
@@ -158,14 +159,16 @@ CInstance::CInstance(const bool enable_validation, const char* app_name, const c
     extensions.Print();
 #endif
     assert(extensions.PickCount() >= 2);
-    Create(layers, extensions, app_name, engine_name);
+    Create(layers, extensions, app_name, engine_name, maj_ver, min_ver);
 }
 
-CInstance::CInstance(const CLayers& layers, const CExtensions& extensions, const char* app_name, const char* engine_name) {
-    Create(layers, extensions, app_name, engine_name);
+CInstance::CInstance(const CLayers& layers, const CExtensions& extensions, const char* app_name, const char* engine_name
+                    , uint16_t maj_ver, uint16_t min_ver) {
+    Create(layers, extensions, app_name, engine_name, maj_ver, min_ver);
 }
 
-void CInstance::Create(const CLayers& layers, const CExtensions& extensions, const char* app_name, const char* engine_name) {
+void CInstance::Create(const CLayers& layers, const CExtensions& extensions, const char* app_name, const char* engine_name
+                        , uint16_t maj_ver, uint16_t min_ver) {
     // initialize the VkApplicationInfo structure
     VkApplicationInfo app_info  = {};
     app_info.sType              = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -174,7 +177,7 @@ void CInstance::Create(const CLayers& layers, const CExtensions& extensions, con
     app_info.applicationVersion = 1;
     app_info.pEngineName        = engine_name;
     app_info.engineVersion      = 1;
-    app_info.apiVersion         = VK_API_VERSION_1_0;
+    app_info.apiVersion         = VK_MAKE_VERSION(maj_ver, min_ver, 0);
 
     // initialize the VkInstanceCreateInfo structure
     VkInstanceCreateInfo inst_info    = {};
