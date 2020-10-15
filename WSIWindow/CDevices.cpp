@@ -145,7 +145,7 @@ uint CDevice::FamilyQueueCount(uint family) {
 
 void CDevice::Create() {
     if (handle) Destroy();  // destroy old handle
-    std::vector<float> priorities(queues.size(), 0.0f);
+    std::vector<float> priorities(queues.size(), 1.0f);
     std::vector<VkDeviceQueueCreateInfo> info_list;
     repeat (gpu.queue_families.size()) {
         uint queue_count = FamilyQueueCount(i);
